@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { ListGroupItem } from 'react-bootstrap';
+import { ListGroupItem, Badge } from 'react-bootstrap';
 
 class CategoryItem extends Component {
 
@@ -9,6 +9,9 @@ class CategoryItem extends Component {
     return (
       <ListGroupItem href="#link">
         { this.props.title }
+        <Badge>
+          { this.props.books_count }
+        </Badge>
       </ListGroupItem>
     );
   }

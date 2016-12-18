@@ -1,5 +1,5 @@
-import video from './video';
-import category from './Category';
+import categories from './category';
+import categorySearch from './categorySearch';
 
-export {video};
-export {category};
+export {categories};
+export {categorySearch};

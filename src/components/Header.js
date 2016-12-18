@@ -17,12 +17,6 @@ class Header extends Component {
             <LinkContainer to="categories">
               <NavItem eventKey={2}>Categories</NavItem>
             </LinkContainer>
-            <LinkContainer to="video">
-              <NavItem eventKey={3}>Video</NavItem>
-            </LinkContainer>
-            <LinkContainer to="audio">
-              <NavItem eventKey={4}>Audio</NavItem>
-            </LinkContainer>
           </Nav>
         </Navbar.Header>
       </Navbar>

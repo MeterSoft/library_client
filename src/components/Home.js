@@ -11,7 +11,7 @@ class Home extends Component {
         <Jumbotron>
           <h2>Example app on React</h2>
           <ul>
-            <li>Video - display video list</li>
+            <li>Display list of book`s categories</li>
           </ul>
         </Jumbotron>
       </div>
