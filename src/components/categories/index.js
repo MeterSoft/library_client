@@ -5,29 +5,16 @@ import {loadCategories, categorySearch} from '../../actions/categoryActions';
 import {bindActionCreators} from 'redux';
 import Loader from '../loader/Loader'
 import { ListGroup, FormGroup, FormControl } from 'react-bootstrap';
-import CategoryItem from './categoryItem'
+import CategoryItem from './categoryItem';
 
 class Category extends Component {
-
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     categorySearch: ''
-  //   }
-
-  //   this.handleCategorySearch = this.handleCategorySearch.bind(this);
-  // }
   
   componentWillMount() {
     this.props.loadCategories();
   }
 
   handleCategorySearch(event) {
-    console.log(event.target.value);
     this.props.categorySearch(event.target.value);
-  }
-
-  getCagegories() {
   }
 
   render() {
@@ -43,7 +30,7 @@ class Category extends Component {
         </form>
         <ListGroup>
           {
-            !categories.length && categorySearch == "" ?
+            !categories.length && categorySearch === "" ?
               <Loader /> :
               categories.map((category) => 
                 <CategoryItem 
@@ -51,8 +38,8 @@ class Category extends Component {
                   id={category.id} 
                   title={category.title} 
                   description={category.description}
-                  books_count={category.books_count}
-                   />)
+                  books_count={category.books_count} />
+              )
           }
         </ListGroup>
       </div>
@@ -62,9 +49,6 @@ class Category extends Component {
 
 const mapStateToProps = (state) => {
   const { categories, categorySearch } = state;
-
-  console.log(categorySearch);
-  console.log(categorySearch.toLowerCase());
   
   return {
     categories: categories.filter((category) => {
