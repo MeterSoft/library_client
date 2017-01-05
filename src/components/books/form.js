@@ -5,24 +5,24 @@ import { Form, Button, FormGroup } from 'react-bootstrap';
 class BookForm extends Component {
 
 
-  submitMyForm(data) {
-    const {createBook, onCreateBook, resetForm} = this.props; 
+  save(data) {
+    const {createBook, onCreateBook, reset} = this.props; 
 
-    return createBook(data).then(() => {
-      resetForm();
+    return createBook(data).promise.then(() => {
+      reset();
       onCreateBook();
-      // do other success stuff
+    }).catch((error) => {
+      alert(error);
+      
     });
   }
 
   render() {
-    console.log("fitst", this.props);
-
     const { handleSubmit, pristine, reset, submitting } = this.props;
 
     return (
 
-      <form onSubmit={handleSubmit(this.submitMyForm.bind(this))}>
+      <form onSubmit={handleSubmit(this.save.bind(this))}>
         <div>
           <label htmlFor="title">Title</label>
           <Field name="title" component="input" type="text"/>

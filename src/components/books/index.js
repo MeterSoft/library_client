@@ -24,8 +24,6 @@ class Book extends Component {
   handleBookCreate(params) {
     const { category_id } = this.props.params;
 
-    alert(this.props.createBook(category_id || 1, params));
-
     return this.props.createBook(category_id || 1, params);
   }
 

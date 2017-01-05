@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { SubmissionError } from 'redux-form'
 
 export function getBooks() {
   return fetch(' https://library-api-dev.herokuapp.com/api/books')
@@ -32,7 +33,7 @@ export function createBook(category_id, params) {
   }).then((response) => response.json())
     .then((response) => {
       if (!response["success"]) {
-          throw response["error"]
+        throw new SubmissionError({ username: 'User does not exist', _error: 'Login failed!' })
       }
     });
 }
