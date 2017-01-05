@@ -9,7 +9,7 @@ import CategoryItem from './categoryItem';
 
 class Category extends Component {
   
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadCategories();
   }
 
@@ -22,7 +22,9 @@ class Category extends Component {
 
     return (
 
+
       <div>
+        {this.props.children}
         <form>
           <FormGroup>
             <FormControl type="text"  placeholder="Search" onChange={this.handleCategorySearch.bind(this)}></FormControl>

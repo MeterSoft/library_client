@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Col, Thumbnail, Button } from 'react-bootstrap';
 
-class booksItem extends Component {
+class BooksItem extends Component {
 
   render() {
 
@@ -20,4 +20,4 @@ class booksItem extends Component {
   }
 }
 
-export default booksItem;
+export default BooksItem;

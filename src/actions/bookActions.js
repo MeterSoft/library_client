@@ -1,4 +1,4 @@
-import {getBooks, getBooksByCategory} from '../api/book';
+import {getBooks, getBooksByCategory, createBook as _createBook} from '../api/book';
 
 export function loadBooks() {
   return {
@@ -20,5 +20,13 @@ export function booksSearch(filter) {
   return {
     type: 'BOOKS_SEARCH',
     filter,
+  };
+}
+
+export function createBook(category_id, params) {
+  return {
+    type: 'PROMISE',
+    actions: ['BOOK_GREATING', 'BOOK_CREATED', 'BOOK_CREATE_FAILURE'],
+    promise: _createBook(category_id, params),
   };
 }
