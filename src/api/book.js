@@ -15,14 +15,14 @@ export function getBooksByCategory(category_id) {
 
 export function createBook(category_id, params) {
   const url = `https://library-api-dev.herokuapp.com/api/categories/${category_id}/books`;
-  const url2 = `http://lvh.me:3001/api/categories/${category_id}/books`;
+  // const url2 = `http://lvh.me:3001/api/categories/${category_id}/books`;
 
   const formData  = new FormData();
 
   formData.append("file", params["file"]);
   formData.append( "json", JSON.stringify({ title: params["title"], description: params["description"] }) );
 
-  return fetch(url2, {
+  return fetch(url, {
       type: 'no-cors',
       method: 'post',  
       headers: {  
@@ -35,5 +35,6 @@ export function createBook(category_id, params) {
       if (!response["success"]) {
         throw new SubmissionError({ username: 'User does not exist', _error: 'Login failed!' })
       }
+      return response;
     });
 }

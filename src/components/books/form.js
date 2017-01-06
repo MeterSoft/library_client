@@ -8,12 +8,15 @@ class BookForm extends Component {
   save(data) {
     const {createBook, onCreateBook, reset} = this.props; 
 
-    return createBook(data).promise.then(() => {
+    return createBook(data).then((payload) => {
+
+      console.log("payload", payload);
+      alert("Saved:" + payload["success"]);
       reset();
       onCreateBook();
-    }).catch((error) => {
+    }, (error) => {
+      console.log("error", error);
       alert(error);
-      
     });
   }
 
