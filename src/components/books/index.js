@@ -10,11 +10,14 @@ import AddBook from './addBook';
 
 class Book extends Component {
   
-  componentDidMount() {
+  initialLoadBooks() {
     const { category_id } = this.props.params;
 
     category_id ? this.props.loadBooksByCategory(category_id) : this.props.loadBooks();
+  }
 
+  componentDidMount() {
+    this.initialLoadBooks();
   }
 
   handleBooksSearch(event) {
@@ -35,7 +38,7 @@ class Book extends Component {
 
       <div>
         <Panel>
-          <AddBook createBook={this.handleBookCreate.bind(this)} />
+          <AddBook createBook={this.handleBookCreate.bind(this)} updateBookList={this.initialLoadBooks.bind(this)} />
         </Panel>
         
         <form>
@@ -53,7 +56,7 @@ class Book extends Component {
                   id={book.id} 
                   title={book.title} 
                   description={book.description} 
-                  file={book.file} />
+                  file_url={book.file_url} />
               )
           }
         </Row>

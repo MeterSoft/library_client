@@ -6,14 +6,14 @@ class BookForm extends Component {
 
 
   save(data) {
-    const {createBook, onCreateBook, reset} = this.props; 
+    const {createBook, closeModal, updateBookList, reset} = this.props; 
 
     return createBook(data).then((payload) => {
 
       console.log("payload", payload);
-      alert("Saved:" + payload["success"]);
       reset();
-      onCreateBook();
+      closeModal();
+      updateBookList();
     }, (error) => {
       console.log("error", error);
       alert(error);
@@ -48,7 +48,7 @@ class BookForm extends Component {
 // Decorate the form component
 BookForm = reduxForm({
   form: 'book',
-  fields: ['title', 'description'],
+  fields: ['title', 'description', 'file'],
 })(BookForm);
 
 export default BookForm;

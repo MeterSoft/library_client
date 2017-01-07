@@ -36,7 +36,7 @@ class AddBook extends Component {
             <Modal.Title>Add Book</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <BookForm createBook={this.props.createBook} onCreateBook={this.close.bind(this)} />
+            <BookForm createBook={this.props.createBook} closeModal={this.close.bind(this)} updateBookList={this.props.updateBookList} />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close.bind(this)}>Close</Button>

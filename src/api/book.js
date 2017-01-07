@@ -19,21 +19,19 @@ export function createBook(category_id, params) {
 
   const formData  = new FormData();
 
-  formData.append("file", params["file"]);
-  formData.append( "json", JSON.stringify({ title: params["title"], description: params["description"] }) );
+  formData.append("title", params["title"]);
+  formData.append("description", params["description"]);
+  if (params["file"]) formData.append("file", params["file"][0], params["file"][0].name);
+  
+  console.log("formData", formData);
 
   return fetch(url, {
-      type: 'no-cors',
       method: 'post',  
-      headers: {  
-        // "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "Content-type": "application/json; charset=UTF-8",
-      }, 
-      body:  JSON.stringify(params),
+      body:  formData,
   }).then((response) => response.json())
     .then((response) => {
       if (!response["success"]) {
-        throw new SubmissionError({ username: 'User does not exist', _error: 'Login failed!' })
+        throw new SubmissionError(response["error"])
       }
       return response;
     });

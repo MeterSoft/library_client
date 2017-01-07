@@ -12,7 +12,7 @@ class BooksItem extends Component {
           <h3>{ this.props.title }</h3>
           <p>{ this.props.description }</p>
           <p>
-            <Button bsStyle="primary">Download</Button>
+            <Button href={this.props.file_url} bsStyle="primary" >Download</Button>
           </p>
         </Thumbnail>
       </Col>
