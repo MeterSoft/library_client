@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import './App.css';
-import Header from './components/Header';
-import DevTools from './containers/devTools';
+import Header from '../components/Header';
 
 class App extends Component {
   
@@ -14,7 +12,6 @@ class App extends Component {
         <div className="container">
           {this.props.children}
         </div>
-        <DevTools />
       </div>
     );
   }
