@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import { SubmissionError } from 'redux-form'
 
 export function getBooks() {
   return fetch(' https://library-api-dev.herokuapp.com/api/books')
@@ -19,19 +18,17 @@ export function createBook(category_id, params) {
 
   const formData  = new FormData();
 
-  formData.append("title", params["title"]);
-  formData.append("description", params["description"]);
+  formData.append("title", params["title"] || "");
+  formData.append("description", params["description"] || "");
   if (params["file"]) formData.append("file", params["file"][0], params["file"][0].name);
   
-  console.log("formData", formData);
-
   return fetch(url, {
       method: 'post',  
       body:  formData,
   }).then((response) => response.json())
     .then((response) => {
       if (!response["success"]) {
-        throw new SubmissionError(response["error"])
+        throw response["error"]
       }
       return response;
     });

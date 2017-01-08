@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import Loader from '../loader/Loader';
 import { Panel, Row, FormGroup, FormControl } from 'react-bootstrap';
 import BooksItem from './booksItem';
-import AddBook from './addBook';
+import Form from './form';
 
 class Book extends Component {
   
@@ -38,7 +38,7 @@ class Book extends Component {
 
       <div>
         <Panel>
-          <AddBook createBook={this.handleBookCreate.bind(this)} updateBookList={this.initialLoadBooks.bind(this)} />
+          <Form createBook={this.handleBookCreate.bind(this)} updateBookList={this.initialLoadBooks.bind(this)} />
         </Panel>
         
         <form>

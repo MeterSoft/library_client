@@ -1,46 +1,81 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Form, Button, FormGroup } from 'react-bootstrap';
+import { Form, Button, FormGroup, ButtonToolbar, Modal, Alert } from 'react-bootstrap';
+import { SubmissionError } from 'redux-form'
+import Input from '../Input'
+import AlertError from '../error'
 
 class BookForm extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
 
   save(data) {
-    const {createBook, closeModal, updateBookList, reset} = this.props; 
+    const {createBook, updateBookList, reset} = this.props; 
 
     return createBook(data).then((payload) => {
-
-      console.log("payload", payload);
       reset();
-      closeModal();
+      this.close();
       updateBookList();
     }, (error) => {
-      console.log("error", error);
-      alert(error);
+      throw new SubmissionError({ ...error, _error: "Please, resolve problems" })
     });
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { error, handleSubmit, pristine, reset, submitting } = this.props;
 
     return (
+      <div>        
+        <Button
+          bsStyle="primary"
+          bsSize="small"
+          onClick={this.open.bind(this)}
+        >
+          Add book
+        </Button>
 
-      <form onSubmit={handleSubmit(this.save.bind(this))}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <Field name="title" component="input" type="text"/>
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <Field name="description" component="textarea" type="text"/>
-        </div>
-        <div>
-          <label htmlFor="file">File</label>
-          <Field name="file" component="input" type="file"/>
-        </div>
-        <button type="submit">Submit</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-      </form>
+        <form>
+          <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Book</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>            
+              {error && <AlertError error={error}/>}
+
+              <Field name="title" component={Input} label="Title" type="text" />
+              <Field name="description" component={Input} label="Description" componentClass="textarea" />
+              <Field name="file" component={Input} label="File" type="file" />
+            </Modal.Body>
+            <Modal.Footer>
+              <ButtonToolbar>
+                <Button type="submit" onClick={handleSubmit(this.save.bind(this))}>
+                  Submit
+                </Button>
+                <Button type="button" onClick={reset} disabled={pristine || submitting} >
+                  Clear Values
+                </Button>
+                <Button type="button" onClick={this.close.bind(this)}  >
+                  Cencel
+                </Button>
+              </ButtonToolbar>
+            </Modal.Footer>
+          </Modal>
+        </form>
+      </div>
+
     );
   }
 }
