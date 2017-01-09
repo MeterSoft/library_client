@@ -32,9 +32,9 @@ class Category extends Component {
         </form>
         <ListGroup>
           {
-            !categories.length && categorySearch === "" ?
+            categories.loading ?
               <Loader /> :
-              categories.map((category) => 
+              categories.data.map((category) => 
                 <CategoryItem 
                   key={category.id} 
                   id={category.id} 
@@ -53,9 +53,12 @@ const mapStateToProps = (state) => {
   const { categories, categorySearch } = state;
   
   return {
-    categories: categories.filter((category) => {
-      return category.title.toLowerCase().indexOf(categorySearch.toLowerCase()) !== -1 
-    })
+    categories: {
+      loading: categories.loading,
+      data: categories.data.filter((category) => {
+        return category.title.toLowerCase().indexOf(categorySearch.toLowerCase()) !== -1 
+      })
+    }
   }
 }
 

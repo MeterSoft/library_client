@@ -61,7 +61,7 @@ class BookForm extends Component {
             </Modal.Body>
             <Modal.Footer>
               <ButtonToolbar>
-                <Button type="submit" onClick={handleSubmit(this.save.bind(this))}>
+                <Button type="submit" onClick={handleSubmit(this.save.bind(this))} disabled={submitting} >
                   Submit
                 </Button>
                 <Button type="button" onClick={reset} disabled={pristine || submitting} >

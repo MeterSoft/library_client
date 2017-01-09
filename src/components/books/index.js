@@ -47,10 +47,11 @@ class Book extends Component {
           </FormGroup>
         </form>
         <Row>
+          {console.log("books", books.loading)}
           {
-            !books.length && booksSearch === "" ?
+            books.loading ?
               <Loader /> :
-              books.map((book) => 
+              books.data.map((book) => 
                 <BooksItem 
                   key={book.id} 
                   id={book.id} 
@@ -69,9 +70,12 @@ const mapStateToProps = (state) => {
   const { books, booksSearch } = state;
   
   return {
-    books: books.filter((book) => {
-      return book.title.toLowerCase().indexOf(booksSearch.toLowerCase()) !== -1 
-    })
+    books: {
+      loading: books.loading,
+      data: books.data.filter((book) => {
+        return book.title.toLowerCase().indexOf(booksSearch.toLowerCase()) !== -1 
+      }),
+    }
   }
 }
 
