@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
 export function getBooks() {
-  return fetch(' https://library-api-dev.herokuapp.com/api/books')
+  return fetch('https://library-api-dev.herokuapp.com/api/books')
     .then((response) => response.json())
 }
 

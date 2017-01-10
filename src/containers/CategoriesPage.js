@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 import {connect} from 'react-redux';
-import {loadCategories, categorySearch} from '../../actions/categoryActions';
+import {loadCategories, categorySearch} from '../actions/categoryActions';
 import {bindActionCreators} from 'redux';
-import Loader from '../loader/Loader'
+import Loader from '../components/loader/Loader'
 import { ListGroup, FormGroup, FormControl } from 'react-bootstrap';
-import CategoryItem from './categoryItem';
+import CategoryItem from '../components/categories/categoryItem';
 
-class Category extends Component {
+class CategoriesPage extends Component {
   
   componentDidMount() {
     this.props.loadCategories();
@@ -18,13 +18,10 @@ class Category extends Component {
   }
 
   render() {
-    const { categories, categorySearch } = this.props;
+    const { categories } = this.props;
 
     return (
-
-
       <div>
-        {this.props.children}
         <form>
           <FormGroup>
             <FormControl type="text"  placeholder="Search" onChange={this.handleCategorySearch.bind(this)}></FormControl>
@@ -69,4 +66,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Category);
+)(CategoriesPage);

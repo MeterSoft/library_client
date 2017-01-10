@@ -14,7 +14,7 @@ class Input extends Component {
     } = this.props;
 
     let message;
-    const validationState = touched && ( error && "error" ) || ( warning && "warning" ) || null;
+    const validationState = (touched && ( error && "error" )) || ( warning && "warning" ) || null;
 
     if ( touched && ( error || warning ) ) {
       message = <span className="help-block">{ error || warning }</span>;

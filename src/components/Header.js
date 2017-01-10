@@ -11,14 +11,11 @@ class Header extends Component {
       <Navbar>
         <Navbar.Header>
           <Nav>
-            <IndexLinkContainer to="/">
-              <NavItem eventKey={1}>Home</NavItem>
+            <IndexLinkContainer to="/categories">
+              <NavItem eventKey={1}>Categories</NavItem>
             </IndexLinkContainer>
-            <LinkContainer to="/categories">
-              <NavItem eventKey={2}>Categories</NavItem>
-            </LinkContainer>
             <LinkContainer to="/books">
-              <NavItem eventKey={3}>Books</NavItem>
+              <NavItem eventKey={2}>Books</NavItem>
             </LinkContainer>
           </Nav>
         </Navbar.Header>

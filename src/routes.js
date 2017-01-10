@@ -1,22 +1,18 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, IndexRedirect } from 'react-router'
 
-import App from './containers/App';
-import Home from './components/Home';
-import Category from './components/categories/index';
-import Book from './components/books/index';
-import NotFound from './components/NotFound';
+import App from './containers/App'
+import BooksPage from './containers/BooksPage'
+import CategoriesPage from './containers/CategoriesPage'
+import NotFoundPage from './containers/NotFoundPage'
 
 export const routes = (
-  <div>
-    <Route path='/' component={App}>
-      <IndexRoute component={Home} />
-      <Route path='home' component={Home} />
-      <Route path='categories' component={Category} />
-      <Route path='books' component={Book}>
-        <Route path='/categories/:category_id/books' component={Book} />
-      </Route>
+  <Route path='/' component={App}>
+    <IndexRedirect to="categories" />
+    <Route path='categories' component={CategoriesPage} />
+    <Route path='books' component={BooksPage} >
+      <Route path='/categories/:category_id/books' component={BooksPage} />
     </Route>
-    <Route path='*' component={NotFound} />
-  </div>
+    <Route path='*' component={NotFoundPage} />
+  </Route>
 )

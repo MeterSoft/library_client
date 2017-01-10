@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import {connect} from 'react-redux';
-import {loadBooks, booksSearch, loadBooksByCategory, createBook} from '../../actions/bookActions';
+import {loadBooks, booksSearch, loadBooksByCategory, createBook} from '../actions/bookActions';
 import {bindActionCreators} from 'redux';
-import Loader from '../loader/Loader';
+import Loader from '../components/loader/Loader';
 import { Panel, Row, FormGroup, FormControl } from 'react-bootstrap';
-import BooksItem from './booksItem';
-import Form from './form';
+import BooksItem from '../components/books/booksItem';
+import Form from '../components/books/form';
 
-class Book extends Component {
+class BooksPage extends Component {
   
   initialLoadBooks() {
     const { category_id } = this.props.params;
@@ -16,8 +16,19 @@ class Book extends Component {
     category_id ? this.props.loadBooksByCategory(category_id) : this.props.loadBooks();
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.initialLoadBooks();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { pathname } = this.props.location;
+
+    console.log(nextProps);
+
+    if (nextProps.location.pathname !== pathname) {
+      this.props.params.category_id = null;
+      this.initialLoadBooks();
+    }
   }
 
   handleBooksSearch(event) {
@@ -31,10 +42,9 @@ class Book extends Component {
   }
 
   render() {
-    const { books, booksSearch } = this.props;
+    const { books } = this.props;
 
     return (
-
 
       <div>
         <Panel>
@@ -47,7 +57,6 @@ class Book extends Component {
           </FormGroup>
         </form>
         <Row>
-          {console.log("books", books.loading)}
           {
             books.loading ?
               <Loader /> :
@@ -86,4 +95,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Book);
+)(BooksPage);
