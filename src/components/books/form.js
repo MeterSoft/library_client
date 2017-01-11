@@ -23,7 +23,9 @@ class BookForm extends Component {
   }
 
   save(data) {
-    const {createBook, updateBookList, reset} = this.props; 
+    const {createBook, updateBookList, reset, categories} = this.props; 
+
+    if (!data.category_id) data.category_id = categories.data[0].id
 
     return createBook(data).then((payload) => {
       reset();
@@ -62,7 +64,7 @@ class BookForm extends Component {
               <Field name="category_id" component={Input} label="Category" componentClass="select">
                 {
                   categories.data.map((category) => {
-                    return <option value={category.id}>{category.title}</option>
+                    return <option key={category.id} value={category.id}>{category.title}</option>
                   })
                 }
               </Field>
