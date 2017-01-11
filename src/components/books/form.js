@@ -30,7 +30,8 @@ class BookForm extends Component {
       this.close();
       updateBookList();
     }, (error) => {
-      throw new SubmissionError({ ...error, _error: "Please, resolve problems" })
+      console.log("++++++++++++++++++++++++", error);
+      throw new SubmissionError({ ...error.error, _error: "Please, resolve problems" })
     });
   }
 

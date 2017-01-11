@@ -4,6 +4,8 @@ import books from './book'
 import booksSearch from './booksSearch';
 import { reducer as form } from 'redux-form'
 import createBook from './createBook'
+import login from './login'
+import auth from './auth'
 import { routerReducer as routing } from 'react-router-redux'
 
 export {categories};
@@ -13,3 +15,5 @@ export {booksSearch};
 export {form};
 export {createBook};
 export {routing};
+export {login};
+export {auth};
