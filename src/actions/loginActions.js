@@ -17,9 +17,10 @@ export function setCurrentUser(user) {
 }
 
 export function logout() {
-  return dispatch => {
-    localStorage.removeItem("access_token");
-    setAuthorizationToken(false);
-    dispatch(setCurrentUser({}));
-  }
+  localStorage.removeItem("access_token");
+  setAuthorizationToken(false);
+  return {
+    type: 'REMOVE_CURRENT_USER',
+    user: {}
+  };
 }

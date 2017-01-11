@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
@@ -8,11 +9,16 @@ import { logout } from '../actions/loginActions'
 
 class Header extends Component {
 
+  logout(e) {
+    e.preventDefault();
+    this.props.logout();
+  }
+
   render() {
     const { isAuthenticated } = this.props.auth;
 
     const userLinks = (
-      <NavItem eventKey={4} onClick={this.props.logout}>Logout</NavItem>
+      <NavItem eventKey={4} onClick={this.logout.bind(this)}>Logout</NavItem>
     );
 
     const guestLinks = (
@@ -24,7 +30,7 @@ class Header extends Component {
     return (
 
       <Navbar>
-        <Navbar.Collapse>
+        <Navbar.Header>
           { isAuthenticated && 
             <Nav>
               <IndexLinkContainer to="/categories">
@@ -35,10 +41,10 @@ class Header extends Component {
               </LinkContainer>
             </Nav>
           }
-          <Nav pullRight>
-            { isAuthenticated ? userLinks : guestLinks }
-          </Nav>
-        </Navbar.Collapse>
+        </Navbar.Header>
+        <Nav pullRight>
+          { isAuthenticated ? userLinks : guestLinks }
+        </Nav>
       </Navbar>
     );
   }
@@ -46,8 +52,13 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
+    ...state,
     auth: state.auth
   }
 }
 
-export default connect(mapStateToProps, { logout })(Header);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({logout}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

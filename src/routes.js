@@ -6,15 +6,17 @@ import LoginPage from './containers/LoginPage'
 import BooksPage from './containers/BooksPage'
 import CategoriesPage from './containers/CategoriesPage'
 import NotFoundPage from './containers/NotFoundPage'
-import requireAuth from './api/requireAuth'
+import Authenticate from './api/requireAuth'
 
 export const routes = (
   <Route path='/' component={App}>
     <IndexRedirect to="categories" />
     <Route path='login' component={LoginPage} />
-    <Route path='categories' component={requireAuth(CategoriesPage)} />
-    <Route path='books' component={requireAuth(BooksPage)} >
-      <Route path='/categories/:category_id/books' component={requireAuth(BooksPage)} />
+    <Route component={Authenticate}>
+      <Route path='categories' component={CategoriesPage} />
+      <Route path='books' component={BooksPage} >
+        <Route path='/categories/:category_id/books' component={BooksPage} />
+      </Route>
     </Route>
     <Route path='*' component={NotFoundPage} />
   </Route>
