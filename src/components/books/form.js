@@ -36,7 +36,7 @@ class BookForm extends Component {
   }
 
   render() {
-    const { error, handleSubmit, pristine, reset, submitting } = this.props;
+    const { error, handleSubmit, pristine, reset, submitting, categories } = this.props;
 
     return (
       <div>        
@@ -59,6 +59,13 @@ class BookForm extends Component {
               <Field name="title" component={Input} label="Title" type="text" />
               <Field name="description" component={Input} label="Description" componentClass="textarea" />
               <Field name="file" component={Input} label="File" type="file" />
+              <Field name="category_id" component={Input} label="Category" componentClass="select">
+                {
+                  categories.data.map((category) => {
+                    return <option value={category.id}>{category.title}</option>
+                  })
+                }
+              </Field>
             </Modal.Body>
             <Modal.Footer>
               <ButtonToolbar>
@@ -84,7 +91,7 @@ class BookForm extends Component {
 // Decorate the form component
 BookForm = reduxForm({
   form: 'book',
-  fields: ['title', 'description', 'file'],
+  fields: ['title', 'description', 'file', 'category_id'],
 })(BookForm);
 
 export default BookForm;

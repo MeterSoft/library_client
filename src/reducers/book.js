@@ -4,8 +4,8 @@ export default function reducer(state = { loading: false, data: [] }, action) {
     return { success: true, data: action.payload }
   case 'BOOKS_LOADING':
     return { ...state, loading: true }
-  case 'BOOKS_LOADING_FAILURE':
-    return { success: false, error: action.error }
+  case 'BOOKS_LOAD_FAILURE':
+    return { ...state, success: false, error: action.error, loading: false }
   default:
     return state;
   }

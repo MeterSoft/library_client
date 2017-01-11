@@ -7,6 +7,7 @@ import Loader from '../components/loader/Loader';
 import { Panel, Row, FormGroup, FormControl } from 'react-bootstrap';
 import BooksItem from '../components/books/booksItem';
 import Form from '../components/books/form';
+import {loadCategories} from '../actions/categoryActions'
 
 class BooksPage extends Component {
   
@@ -14,6 +15,7 @@ class BooksPage extends Component {
     const { category_id } = this.props.params;
 
     category_id ? this.props.loadBooksByCategory(category_id) : this.props.loadBooks();
+    this.props.loadCategories();
   }
 
   componentWillMount() {
@@ -36,19 +38,17 @@ class BooksPage extends Component {
   }
 
   handleBookCreate(params) {
-    const { category_id } = this.props.params;
-
-    return this.props.createBook(category_id || 1, params);
+    return this.props.createBook(params);
   }
 
   render() {
-    const { books } = this.props;
+    const { books, categories } = this.props;
 
     return (
 
       <div>
         <Panel>
-          <Form createBook={this.handleBookCreate.bind(this)} updateBookList={this.initialLoadBooks.bind(this)} />
+          <Form createBook={this.handleBookCreate.bind(this)} updateBookList={this.initialLoadBooks.bind(this)} categories={categories} />
         </Panel>
         
         <form>
@@ -76,20 +76,23 @@ class BooksPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { books, booksSearch } = state;
+  const { books, booksSearch, categories } = state;
   
+  console.log("categories", categories);
+
   return {
     books: {
       loading: books.loading,
       data: books.data.filter((book) => {
         return book.title.toLowerCase().indexOf(booksSearch.toLowerCase()) !== -1 
       }),
-    }
+    },
+    categories: categories
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadBooks, booksSearch, loadBooksByCategory, createBook}, dispatch)
+  return bindActionCreators({loadBooks, booksSearch, loadBooksByCategory, createBook, loadCategories}, dispatch)
 }
 
 export default connect(

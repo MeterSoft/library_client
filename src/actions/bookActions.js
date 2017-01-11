@@ -23,11 +23,11 @@ export function booksSearch(filter) {
   };
 }
 
-export function createBook(category_id, params) {
+export function createBook(params) {
   return {
     type: 'PROMISE',
     actions: ['BOOK_GREATING', 'BOOK_CREATED', 'BOOK_CREATE_FAILURE'],
-    promise: _createBook(category_id, params),
+    promise: _createBook(params),
   };
 }
 

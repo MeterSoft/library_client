@@ -1,7 +1,10 @@
-import axios from 'axios';
+import axios from 'axios'
+import {DOMAIN} from './domain'
 
 export function login(data) {
-  return axios.post('https://library-api-dev.herokuapp.com/api/sessions', data)
+  const url = `${DOMAIN}/api/sessions`;
+
+  return axios.post(url, data)
     .then((response) => response.data, 
           (error) => { throw error.response.data }
     );

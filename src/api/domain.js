@@ -1,0 +1,1 @@
+export const DOMAIN = process.env.NODE_ENV === 'production' ? "https://library-api-dev.herokuapp.com" : "http://localhost:3001"

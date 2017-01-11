@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Button, ButtonToolbar, Modal, Col } from 'react-bootstrap';
+import { Button, ButtonToolbar, Col } from 'react-bootstrap';
 import { SubmissionError } from 'redux-form'
 import Input from '../Input'
 import AlertError from '../error'

@@ -1,6 +1,9 @@
-import axios from 'axios';
+import axios from 'axios'
+import {DOMAIN} from './domain'
 
 export function getCategories() {
-  return axios.get(' https://library-api-dev.herokuapp.com/api/categories')
+  const url = `${DOMAIN}/api/categories`;
+  
+  return axios.get(url)
     .then((response) => response.data)
 }

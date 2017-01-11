@@ -1,20 +1,24 @@
-import axios from 'axios';
+import axios from 'axios'
+import {DOMAIN} from './domain'
 
 export function getBooks() {
-  return axios.get('https://library-api-dev.herokuapp.com/api/books')
+  const url = `${DOMAIN}/api/books`;
+
+  return axios.get(url)
     .then((response) => response.data)
 }
 
 export function getBooksByCategory(category_id) {
-  const url = `https://library-api-dev.herokuapp.com/api/categories/${category_id}/books`;
+  const url = `${DOMAIN}/api/categories/${category_id}/books`;
   
   return axios.get(url)
     .then((response) => response.data)
 }
 
-export function createBook(category_id, params) {
-  const url = `https://library-api-dev.herokuapp.com/api/categories/${category_id}/books`;
-  const url2 = `http://lvh.me:3001/api/categories/${category_id}/books`;
+export function createBook(params) {
+  const { category_id } = params;
+
+  const url = `${DOMAIN}/api/categories/${category_id}/books`;
 
   const formData  = new FormData();
 
