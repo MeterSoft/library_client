@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-
-import {connect} from 'react-redux';
-import {loadBooks, booksSearch, loadBooksByCategory, createBook} from '../actions/bookActions';
-import {bindActionCreators} from 'redux';
-import Loader from '../components/loader/Loader';
-import { Panel, Row, FormGroup, FormControl } from 'react-bootstrap';
-import BooksItem from '../components/books/booksItem';
-import Form from '../components/books/form';
+import React, { Component } from 'react'
+import {connect} from 'react-redux'
+import {loadBooks, booksSearch, loadBooksByCategory, createBook, updateBook, openBookModal, closeBookModal} from '../actions/bookActions'
+import {bindActionCreators} from 'redux'
+import Loader from '../components/loader/Loader'
+import { Panel, Row, FormGroup, FormControl, Button } from 'react-bootstrap'
+import BooksItem from '../components/books/booksItem'
+import Form from '../components/books/form'
 import {loadCategories} from '../actions/categoryActions'
 
 class BooksPage extends Component {
@@ -25,8 +24,6 @@ class BooksPage extends Component {
   componentWillReceiveProps(nextProps) {
     const { pathname } = this.props.location;
 
-    console.log(nextProps);
-
     if (nextProps.location.pathname !== pathname) {
       this.props.params.category_id = null;
       this.initialLoadBooks();
@@ -41,14 +38,30 @@ class BooksPage extends Component {
     return this.props.createBook(params);
   }
 
+  handleBookUpdate(params) {
+    return this.props.updateBook(params);
+  }
+
   render() {
-    const { books, categories } = this.props;
+    const { books, categories, openBookModal, closeBookModal, bookModal } = this.props;
 
     return (
 
       <div>
         <Panel>
-          <Form createBook={this.handleBookCreate.bind(this)} updateBookList={this.initialLoadBooks.bind(this)} categories={categories} />
+          <Button
+            bsStyle="primary"
+            bsSize="small"
+            onClick={openBookModal}>
+            Add book
+          </Button>
+          <Form bookModal={bookModal}
+                closeBookModal={closeBookModal}
+                createBook={this.handleBookCreate.bind(this)} 
+                updateBook={this.handleBookUpdate.bind(this)} 
+                updateBookList={this.initialLoadBooks.bind(this)} 
+                categories={categories} 
+                initialValues={bookModal.book} />
         </Panel>
         
         <form>
@@ -63,10 +76,8 @@ class BooksPage extends Component {
               books.data.map((book) => 
                 <BooksItem 
                   key={book.id} 
-                  id={book.id} 
-                  title={book.title} 
-                  description={book.description} 
-                  file_url={book.file_url} />
+                  book={book}
+                  openBookModal={openBookModal} />
               )
           }
         </Row>
@@ -76,10 +87,8 @@ class BooksPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { books, booksSearch, categories } = state;
+  const { books, booksSearch, categories, bookModal } = state;
   
-  console.log("categories", categories);
-
   return {
     books: {
       loading: books.loading,
@@ -87,12 +96,13 @@ const mapStateToProps = (state) => {
         return book.title.toLowerCase().indexOf(booksSearch.toLowerCase()) !== -1 
       }),
     },
-    categories: categories
+    categories: categories,
+    bookModal,
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadBooks, booksSearch, loadBooksByCategory, createBook, loadCategories}, dispatch)
+  return bindActionCreators({loadBooks, booksSearch, loadBooksByCategory, createBook, updateBook, loadCategories, openBookModal, closeBookModal}, dispatch)
 }
 
 export default connect(

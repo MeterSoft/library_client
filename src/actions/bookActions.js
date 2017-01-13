@@ -1,4 +1,4 @@
-import {getBooks, getBooksByCategory, createBook as _createBook} from '../api/book';
+import {getBooks, getBooksByCategory, createBook as _createBook, updateBook as _updateBook} from '../api/book';
 
 export function loadBooks() {
   return {
@@ -28,6 +28,27 @@ export function createBook(params) {
     type: 'PROMISE',
     actions: ['BOOK_GREATING', 'BOOK_CREATED', 'BOOK_CREATE_FAILURE'],
     promise: _createBook(params),
+  };
+}
+
+export function updateBook(params) {
+  return {
+    type: 'PROMISE',
+    actions: ['BOOK_UPDATING', 'BOOK_UPDATED', 'BOOK_UPDATE_FAILURE'],
+    promise: _updateBook(params),
+  };
+}
+
+export function openBookModal(book = {}) {
+  return {
+    type: 'OPEN_BOOK_MODAL',
+    book
+  };
+}
+
+export function closeBookModal() {
+  return {
+    type: 'CLOSE_BOOK_MODAL',
   };
 }
 

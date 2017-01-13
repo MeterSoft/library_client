@@ -7,8 +7,6 @@ class AlertError extends Component {
 
     const { error } = this.props;
 
-    console.log("error label ", error);
-
     return(
       <div>
         { 

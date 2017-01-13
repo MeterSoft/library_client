@@ -7,60 +7,64 @@ import AlertError from '../error'
 
 class BookForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false
-    };
+  save(params) {
+    const { bookModal, categories } = this.props; 
+
+    if (!params.category_id) params.category_id = categories.data[0].id
+    return bookModal.book.id ? this.updateBook(params) : this.createBook(params)
   }
 
-  close() {
-    this.setState({ showModal: false });
+  afterSuccessSave() {
+    const { updateBookList, reset, closeBookModal } = this.props;
+
+    reset();
+    closeBookModal();
+    updateBookList(); 
   }
 
-  open() {
-    this.setState({ showModal: true });
+  createBook(params) {
+    const { createBook } = this.props;
+
+    return createBook(params).then((payload) => {
+      this.afterSuccessSave();
+    }).catch((error) => {
+      throw new SubmissionError({ ...error, _error: "Please, resolve problems" });
+    });
   }
 
-  save(data) {
-    const {createBook, updateBookList, reset, categories} = this.props; 
+  updateBook(params) {
+    const { updateBook } = this.props;
 
-    if (!data.category_id) data.category_id = categories.data[0].id
-
-    return createBook(data).then((payload) => {
-      reset();
-      this.close();
-      updateBookList();
-    }, (error) => {
-      console.log("++++++++++++++++++++++++", error);
-      throw new SubmissionError({ ...error.error, _error: "Please, resolve problems" })
+    return updateBook(params).then((payload) => {
+      this.afterSuccessSave();
+    }).catch((error) => {
+      throw new SubmissionError({ ...error, _error: "Please, resolve problems" });
     });
   }
 
   render() {
-    const { error, handleSubmit, pristine, reset, submitting, categories } = this.props;
+    const { error, handleSubmit, pristine, reset, submitting, categories, bookModal, closeBookModal } = this.props;
+    const { book } = bookModal;
 
     return (
-      <div>        
-        <Button
-          bsStyle="primary"
-          bsSize="small"
-          onClick={this.open.bind(this)}
-        >
-          Add book
-        </Button>
-
+      <div>
         <form>
-          <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal show={bookModal.isOpen} onHide={closeBookModal}>
             <Modal.Header closeButton>
-              <Modal.Title>Add Book</Modal.Title>
+              <Modal.Title>
+                {
+                  book.id ? "Update book" : "Add book"
+                }
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>            
               {error && <AlertError error={error}/>}
 
               <Field name="title" component={Input} label="Title" type="text" />
               <Field name="description" component={Input} label="Description" componentClass="textarea" />
-              <Field name="file" component={Input} label="File" type="file" />
+              {
+                !book.id && <Field name="file" component={Input} label="File" type="file" />
+              }
               <Field name="category_id" component={Input} label="Category" componentClass="select">
                 {
                   categories.data.map((category) => {
@@ -77,7 +81,7 @@ class BookForm extends Component {
                 <Button type="button" onClick={reset} disabled={pristine || submitting} >
                   Clear Values
                 </Button>
-                <Button type="button" onClick={this.close.bind(this)}  >
+                <Button type="button" onClick={closeBookModal}  >
                   Cencel
                 </Button>
               </ButtonToolbar>
@@ -94,6 +98,8 @@ class BookForm extends Component {
 BookForm = reduxForm({
   form: 'book',
   fields: ['title', 'description', 'file', 'category_id'],
+  enableReinitialize: true,
 })(BookForm);
 
+  
 export default BookForm;

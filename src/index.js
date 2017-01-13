@@ -12,7 +12,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 if (localStorage.access_token) {
   const { access_token, user } = JSON.parse(localStorage.access_token);
-  console.log("localStorage.access_token", access_token);
+
   store.dispatch(setCurrentUser(user));
   setAuthorizationToken(access_token);
 }
