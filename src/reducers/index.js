@@ -9,6 +9,7 @@ import auth from './auth'
 import { routerReducer as routing } from 'react-router-redux'
 import bookModal from './bookModal'
 import updateBook from './updateBook'
+import deleteBook from './deleteBook'
 
 export {categories}
 export {categorySearch}
@@ -21,3 +22,4 @@ export {login}
 export {auth}
 export {bookModal}
 export {updateBook}
+export {deleteBook}

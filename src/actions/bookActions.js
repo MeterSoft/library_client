@@ -1,4 +1,4 @@
-import {getBooks, getBooksByCategory, createBook as _createBook, updateBook as _updateBook} from '../api/book';
+import {getBooks, getBooksByCategory, createBook as _createBook, updateBook as _updateBook, deleteBook as _deleteBook} from '../api/book';
 
 export function loadBooks() {
   return {
@@ -52,3 +52,10 @@ export function closeBookModal() {
   };
 }
 
+export function deleteBook(params) {
+  return {
+    type: 'PROMISE',
+    actions: ['BOOK_DELETING', 'BOOK_DELETED', 'BOOK_DELETE_FAILURE'],
+    promise: _deleteBook(params),
+  };
+}

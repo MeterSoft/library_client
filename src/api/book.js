@@ -45,3 +45,12 @@ export function updateBook(params) {
           .then((response) => response.data)
           .catch((error) => { throw error.response.data.error })
 }
+
+export function deleteBook(params) {
+  const { category_id, id } = params;
+  const url = `${DOMAIN}/api/categories/${category_id}/books/${id}`;
+
+  return axios.delete(url)
+          .then((response) => response.data)
+          .catch((error) => { throw error.response.data.error })
+}

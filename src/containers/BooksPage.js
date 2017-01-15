@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {loadBooks, booksSearch, loadBooksByCategory, createBook, updateBook, openBookModal, closeBookModal} from '../actions/bookActions'
+import {loadBooks, booksSearch, loadBooksByCategory, createBook, updateBook, openBookModal, closeBookModal, deleteBook} from '../actions/bookActions'
 import {bindActionCreators} from 'redux'
 import Loader from '../components/loader/Loader'
 import { Panel, Row, FormGroup, FormControl, Button } from 'react-bootstrap'
@@ -42,6 +42,10 @@ class BooksPage extends Component {
     return this.props.updateBook(params);
   }
 
+  handleBookDelete(params) {
+    return this.props.deleteBook(params);
+  }
+
   render() {
     const { books, categories, openBookModal, closeBookModal, bookModal } = this.props;
 
@@ -77,7 +81,9 @@ class BooksPage extends Component {
                 <BooksItem 
                   key={book.id} 
                   book={book}
-                  openBookModal={openBookModal} />
+                  openBookModal={openBookModal}
+                  updateBookList={this.initialLoadBooks.bind(this)}
+                  deleteBook={this.handleBookDelete.bind(this)} />
               )
           }
         </Row>
@@ -102,7 +108,7 @@ const mapStateToProps = (state) => {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadBooks, booksSearch, loadBooksByCategory, createBook, updateBook, loadCategories, openBookModal, closeBookModal}, dispatch)
+  return bindActionCreators({loadBooks, booksSearch, loadBooksByCategory, createBook, updateBook, loadCategories, openBookModal, closeBookModal, deleteBook}, dispatch)
 }
 
 export default connect(

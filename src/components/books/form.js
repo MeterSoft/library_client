@@ -82,7 +82,7 @@ class BookForm extends Component {
                   Clear Values
                 </Button>
                 <Button type="button" onClick={closeBookModal}  >
-                  Cencel
+                  Cancel
                 </Button>
               </ButtonToolbar>
             </Modal.Footer>
