@@ -37,8 +37,42 @@ class BooksPage extends Component {
       }]
     };
 
+    let books_count = 0;
+    categories.data.map((category) => { books_count += category.books_count });
+    const dataPie = categories.data.map((category) => { return category.books_count ? { name: category.title, y: books_count * 100 / category.books_count } : null });
+
+    var configPie = {
+      chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+      title: { text: 'Favorite categories' },
+      plotOptions: {
+          pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                  style: {
+                      color: 'black'
+                  }
+              }
+          }
+      },
+      series: [{
+          name: 'Brands',
+          data: dataPie
+      }]
+    };
+
     return(
-      <ReactHighcharts config={config}></ReactHighcharts>
+      <div>
+        <ReactHighcharts config={config}></ReactHighcharts>
+        <ReactHighcharts config={configPie}></ReactHighcharts>
+      </div>
     );
   }
 }
