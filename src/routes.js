@@ -7,12 +7,14 @@ import BooksPage from './containers/BooksPage'
 import CategoriesPage from './containers/CategoriesPage'
 import NotFoundPage from './containers/NotFoundPage'
 import Authenticate from './api/requireAuth'
+import ChartsPage from './containers/ChartsPage'
 
 export const routes = (
   <Route path='/' component={App}>
-    <IndexRedirect to="categories" />
+    <IndexRedirect to="charts" />
     <Route path='login' component={LoginPage} />
     <Route component={Authenticate}>
+      <Route path='charts' component={ChartsPage} />
       <Route path='categories' component={CategoriesPage} />
       <Route path='books' component={BooksPage} >
         <Route path='/categories/:category_id/books' component={BooksPage} />

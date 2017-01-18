@@ -18,7 +18,7 @@ class BookForm extends Component {
       localStorage.setItem("access_token", JSON.stringify(payload))
       setAuthorizationToken(access_token);
       setCurrentUser(user);
-      browserHistory.push('/categories');
+      browserHistory.push('/charts');
 
     }, (error) => {
       throw new SubmissionError({ ...error, _error: "Please, resolve problems" })

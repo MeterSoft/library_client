@@ -23,7 +23,7 @@ class Header extends Component {
 
     const guestLinks = (
       <LinkContainer to="/login">
-        <NavItem eventKey={3}>Login</NavItem>
+        <NavItem eventKey={4}>Login</NavItem>
       </LinkContainer>
     );
 
@@ -33,11 +33,14 @@ class Header extends Component {
         <Navbar.Header>
           { isAuthenticated && 
             <Nav>
-              <IndexLinkContainer to="/categories">
-                <NavItem eventKey={1}>Categories</NavItem>
+              <IndexLinkContainer to="/charts">
+                <NavItem eventKey={1}>Charts</NavItem>
               </IndexLinkContainer>
+              <LinkContainer to="/categories">
+                <NavItem eventKey={2}>Categories</NavItem>
+              </LinkContainer>
               <LinkContainer to="/books">
-                <NavItem eventKey={2}>Books</NavItem>
+                <NavItem eventKey={3}>Books</NavItem>
               </LinkContainer>
             </Nav>
           }
